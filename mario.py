@@ -154,14 +154,6 @@ class Mario:
             self.nivel = "primero"
             self.y = 135.8
 
-        """ if (self.x >= (self.width / 2) - 58 and self.x <= 170) and self.y == 110.35000000000001:
-                self.count = -12
-                if (self.x > 78 and self.x < self.width - 94):
-                    self.count = -1
-                    self.primer_niv = False
-            elif self.y == 161.10000000000002 and self.primer_niv == False:
-                self.y = 182"""
-
         #Colision tercera planta 
         if (self.x <= 100 or self.x >= self.width - 110) and (self.y == 66.35 or self.y == 69.55) and not self.mario_dead:
             if self. y == 69.55:
@@ -174,23 +166,6 @@ class Mario:
 
         elif (self.y == 117.1 or self.y == 120.3) and self.nivel != "segundo" and not self.mario_dead:
             self.y = 135.8
-
-            """    if (self.x > 24 and self.x < 72):
-            self.count = -1
-    
-    if (self.y < 87 and self.x >= (self.width / 2) - 58) and not self.tercer_niv:
-        self.count = -14
-        print(self.x)
-        print(self.y)
-        print(self.primer_niv)
-        print(self.segundo_niv)
-        
-        
-    if (self.y >= 90 and self.y <97) and not self.segundo_niv and not self.primer_niv:
-        self.y = 87.29999999999998
-        self.segundo_niv = True
-        #96.14999999999999"""
-                
 
         #Subir a la parte superior de la tercera planta
         elif (self.x <= 100 or self.x >= self.width - 110) and self.y == 37.05 and not self.mario_dead:
@@ -212,12 +187,7 @@ class Mario:
         if self.y == 65.55:
             self.y = 87.8
             self.nivel = "segundo"
-
-            """self.y >= 147.3:
-                self.is_falling = False
-                self.y = self.height - 38
-                self.primer_niv = False"""
-
+            
     def muerte_mario(self, enemigo):
         if (self.x == enemigo.x or self.x + 17 == enemigo.x) and self.y == enemigo.y:
             self.mario_dead = True
