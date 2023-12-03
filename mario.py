@@ -84,13 +84,11 @@ class Mario:
     def mario_fall(self):
         if self.is_falling:
             self.y += (self.count_fall**2) *0.05
-            print(self.y)
             self.count_fall-=1
 
 
     def limitaciones_mario(self):
 
-        print(f"Posición mario: {self.x, self.y}")
 
         #Colision primera planta
         if (self.x <= 86 or self.x >= self.width - 96) and self.y == 163.75 and not self.mario_dead:
@@ -187,7 +185,7 @@ class Mario:
         if self.y == 65.55:
             self.y = 87.8
             self.nivel = "segundo"
-            
+
     def muerte_mario(self, enemigo):
         if (self.x == enemigo.x or self.x + 17 == enemigo.x) and self.y == enemigo.y:
             self.mario_dead = True
@@ -199,13 +197,4 @@ class Mario:
                 pyxel.blt(self.x, self.y, 1, 0, 18, 17, 22)
             else:
                 pyxel.quit()
-
-    def colision_tuberias(self):
-        if self.dir == "right" and self.x + 17 == 204 and self.y == 182:
-            pyxel.quit() #pongo quit para comprobar q hace la colision, cuando funciones meter posiciones de mario
-
-        if self.dir == "left" and self.x == 26 and self.y == 182:
-            pyxel.quit()
-
-
 

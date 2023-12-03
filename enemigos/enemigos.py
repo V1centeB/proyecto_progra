@@ -1,4 +1,5 @@
 import pyxel
+import random
 
 class Enemigos:
 
@@ -11,20 +12,20 @@ class Enemigos:
         self.count_fall = -1
         self.nivel = "tercero"
         self.is_falling = False
-        self.golpeado = False
-        self.is_dead = False
+        self.golpeado = 0
+        self.stop_moving = False
 
 
     def move_enemigos(self):
 
-        if self.dir == "left" and not self.is_falling and not self.is_dead:
+        if self.dir == "left" and not self.is_falling and not self.stop_moving:
             self.x -= 2
             if self.x <= -14:
                 self.x = self.width - 8
         elif self.dir == "left":
             self.x -= 1
 
-        elif self.dir == "right" and not self.is_falling and not self.is_dead:
+        elif self.dir == "right" and not self.is_falling and not self.stop_moving:
             self.x += 2
             if self.x >= self.width:
                 self.x = -14  
@@ -35,45 +36,39 @@ class Enemigos:
     def enemigos_fall(self):
         if self.is_falling:
             self.y += (self.count_fall**2) *0.05
-            print(self.y)
             self.count_fall-=1
 
     def tuberias(self):
         # dentro tuberia
-        if (self.x + 16, self.y) == (218, 188) and self.dir == "right" and not self.is_dead:
+        if (self.x == 26 or self.x + 16 == 218) and self.y == 188 and not self.stop_moving:
             self.y -= 6
 
-        if self.x == 206 and self.y == 182 and not self.is_dead:
+        if self.x == 206 and self.y == 182 and not self.stop_moving:
             self.tuberia_dcha = True
             self.x = 34
             self.y = 25
-            self.dir = "right"
             self.nivel = "tercero"
-            self.count_fall = -1
 
-        if (self.x, self.y) == (26, 188) and self.dir == "left" and not self.is_dead:
+        if (self.x, self.y) == (-12, 182) and self.dir == "left" and not self.stop_moving:
             self.tuberia_izda = True
-            self.x = 1240
+            self.x = 190
             self.y = 25
-            self.dir = "left"
             self.nivel = "tercero"
-            self.count_fall = -1
 
     def muerte_enemigo(self, mario):
-        if (self.x >= mario.x +5 and self.x <= mario.x -5) and self.y == mario.y + 7 and mario.is_jumping:
-            pyxel.quit()
+        if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.is_jumping:
+            print("LE PEGUEEEE")
+            print(random.randint(0,100))
 
     def limitaciones_enemigos(self):
-        print(f"Posición enemigo: {self.x, self.y}")
 
         #Caida inicial (caida de la tuberia)
-        if (self.x == 34 or self.x == 1240) and self.y == self.height - 195:
+        if (self.x == 34 or self.x == 190) and self.y == self.height - 195:
             self.count_fall = -10
             self.is_falling = True
 
         if self.y == 51.7: #51.7
             self.y = self.height - 155 - 15
-
 
         #Subir a la parte superior de la primera planta
         if (self.x <= 87 or self.x >= self.width - 97) and self.y == 131.3 :

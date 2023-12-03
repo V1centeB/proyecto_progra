@@ -37,10 +37,9 @@ class Tablero:
         self.tercer_nivel_der = graficos.Bloques(self.width - 8, self.height - 155)  
 
         #Enemigos
-        self.koopa = Koopa(0, self.height - 195, self.width, self.height, "right")
+        self.koopa = Koopa(self.width, self.height - 195, self.width, self.height, "left")
 
     def update(self):
-        print(self.koopa.y)
         #self.mario.caida_mario()
         self.mario.dir = None
 
@@ -50,7 +49,6 @@ class Tablero:
         """---FUNCIONALIDAD MARIO ----"""
 
         self.mario.limitaciones_mario()
-        self.mario.colision_tuberias()
         self.mario.muerte_mario(self.koopa)
 
 
