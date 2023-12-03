@@ -23,17 +23,17 @@ class Mario:
  
     def draw(self):
         pyxel.cls(0)        
-        pyxel.blt(self.x, self.y, 1, 0, 18, 17, 22)
+        pyxel.blt(self.x, self.y, 1, 0, 13, 17, 22)
 
     #Animacion de mario corriendo a izquierdas
     def draw_left(self):
         pyxel.cls(0)
-        pyxel.blt(self.x, self.y, 1, 34, 18, 17, 22)
+        pyxel.blt(self.x, self.y, 1, 34, 13, 17, 22)
         self.count_sprits += 1
 
     def draw_left_1(self):
         pyxel.cls(0)
-        pyxel.blt(self.x, self.y, 1, 52, 18, 17, 22)
+        pyxel.blt(self.x, self.y, 1, 52, 13, 17, 22)
         if self.count_sprits >= 10:
             self.count_sprits = 0  
         self.count_sprits += 1  
@@ -41,12 +41,12 @@ class Mario:
     #Animacion de mario saltando 
     def draw_jump(self):
         pyxel.cls(0)
-        pyxel.blt(self.x, self.y, 1, 91, 18, 17, 22) 
+        pyxel.blt(self.x, self.y, 1, 91, 13, 17, 22) 
 
     #Animacion mario cayendo
     def draw_fall(self):
         pyxel.cls(0)
-        pyxel.blt(self.x, self.y, 1, 20, 18, 11, 22) 
+        pyxel.blt(self.x, self.y, 1, 20, 13, 11, 22) 
 
 
     def move_mario(self):

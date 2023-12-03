@@ -22,14 +22,14 @@ class Enemigos:
             self.x -= 2
             if self.x <= -14:
                 self.x = self.width - 8
-        elif self.dir == "left":
+        elif self.dir == "left" and self.is_falling:
             self.x -= 1
 
         elif self.dir == "right" and not self.is_falling and not self.stop_moving:
             self.x += 2
             if self.x >= self.width:
                 self.x = -14  
-        elif self.dir == "right":
+        elif self.dir == "right" and self.is_falling:
             self.x += 1
         self.tuberias()
 

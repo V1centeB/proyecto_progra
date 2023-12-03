@@ -92,6 +92,7 @@ class Tablero:
         #for self.enemigo in self.enemigos:
         self.koopa.move_enemigos()
         self.koopa.limitaciones_enemigos()
+        self.koopa.volteado()
         self.koopa.muerte_enemigo(self.mario)
 
 
@@ -150,12 +151,16 @@ class Tablero:
         """Dibujamos mapa interactivo"""
         #vidas mario
         if self.mario.vidas >= 1:
-            pyxel.blt(50, 20, 1, 4, 7, 8, 7)
+            pyxel.blt(50, 20, 1, 4, 2, 8, 7)
         if self.mario.vidas >= 2:
-            pyxel.blt(62, 20, 1, 4, 7, 8, 7)
+            pyxel.blt(62, 20, 1, 4, 2, 8, 7)
         if self.mario.vidas == 3:
-            pyxel.blt(74, 20, 1, 4, 7, 8, 7)
+            pyxel.blt(74, 20, 1, 4, 2, 8, 7)
 
+        if not self.koopa.stop_moving:
+            self.koopa.draw()
 
-        self.koopa.draw()
+        if self.koopa.stop_moving:
+            pyxel.blt(self.koopa.x, self.koopa.y + 7, 1, 2, 155, 10, 9)
+
 
