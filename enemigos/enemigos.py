@@ -31,6 +31,7 @@ class Enemigos:
                 self.x = -14  
         elif self.dir == "right":
             self.x += 1
+        self.tuberias()
 
 
     def enemigos_fall(self):
@@ -57,8 +58,8 @@ class Enemigos:
 
     def muerte_enemigo(self, mario):
         if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.is_jumping:
-            print("LE PEGUEEEE")
-            print(random.randint(0,100))
+            self.golpeado += 1
+            print("PARA")
 
     def limitaciones_enemigos(self):
 

@@ -11,5 +11,6 @@ class Koopa(Enemigos):
         
     def volteado(self):
         if self.golpeado == 1:
-            pass
+            
+            self.stop_moving = True
     

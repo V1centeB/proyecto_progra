@@ -91,7 +91,6 @@ class Tablero:
         """---FUNCIONALIDAD ENEMIGOS ----"""
         #for self.enemigo in self.enemigos:
         self.koopa.move_enemigos()
-        self.koopa.tuberias()
         self.koopa.limitaciones_enemigos()
         self.koopa.muerte_enemigo(self.mario)
 
