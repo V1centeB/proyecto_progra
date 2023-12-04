@@ -6,6 +6,7 @@ class Enemigos:
     def __init__(self, x, y, w, h, dir) -> None:
         self.x = x
         self.y = y
+        self.count_sprits = 0
         self.width = w
         self.height = h
         self.dir = dir
@@ -58,7 +59,7 @@ class Enemigos:
 
     def muerte_enemigo(self, mario):
         if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.is_jumping:
-            self.golpeado += 1
+            self.golpeado += 3
             print("PARA")
 
     def limitaciones_enemigos(self):

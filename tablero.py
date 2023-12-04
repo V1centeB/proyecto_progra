@@ -2,6 +2,7 @@ import pyxel
 import graficos
 from mario import Mario
 from enemigos.koopa import Koopa
+from enemigos.sides import Sides
 from enemigos.enemigos import Enemigos
 
 
@@ -38,8 +39,11 @@ class Tablero:
 
         #Enemigos
         self.koopa = Koopa(self.width, self.height - 195, self.width, self.height, "left")
+        self.side = Sides(0, self.height - 195, self.width, self.height, "right")
+
 
     def update(self):
+        print(self.side.golpeado)
         #self.mario.caida_mario()
         self.mario.dir = None
 
@@ -95,7 +99,10 @@ class Tablero:
         self.koopa.volteado()
         self.koopa.muerte_enemigo(self.mario)
 
-
+        self.side.move_enemigos()
+        self.side.limitaciones_enemigos()
+        self.side.volteado()
+        self.side.muerte_enemigo(self.mario)
 
         if self.koopa.is_falling:
             if self.koopa.count_fall >= -13:
@@ -103,6 +110,14 @@ class Tablero:
             else:
                 self.koopa.is_falling = False
                 self.koopa.count_fall = 0
+
+
+        if self.side.is_falling:
+            if self.side.count_fall >= -13:
+                self.side.enemigos_fall()
+            else:
+                self.side.is_falling = False
+                self.side.count_fall = 0
 
 
     def draw(self):
@@ -163,4 +178,9 @@ class Tablero:
         if self.koopa.stop_moving:
             pyxel.blt(self.koopa.x, self.koopa.y + 7, 1, 2, 155, 10, 9)
 
+        if not self.side.stop_moving:  
+            self.side.draw()
+        
+        if self.side.stop_moving:
+            pyxel.blt(self.side.x, self.side.y, 0, 131, 88, 16, 15)
 

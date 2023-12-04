@@ -13,7 +13,10 @@ class Koopa(Enemigos):
         
         
     def volteado(self):
-        if self.golpeado == 1:
+        if self.golpeado == 3:
             self.stop_moving = True
+        if self.golpeado > 3:
+            self.stop_moving = False
+            self.golpeado = 0
             
     
