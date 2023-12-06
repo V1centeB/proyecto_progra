@@ -48,8 +48,9 @@ class Mario:
         pyxel.cls(0)
         pyxel.blt(self.x, self.y, 1, 20, 13, 11, 22) 
 
-
     def move_mario(self):
+        
+        #Movimiento mario direccion izquierda
         if self.dir == "left" and not self.is_falling:
             self.x -= 4
             if self.x <= -14:
@@ -57,6 +58,7 @@ class Mario:
         elif self.dir == "left":
             self.x -= 1
 
+        #Movimiento mario direccion derecha 
         elif self.dir == "right" and not self.is_falling:
             self.x += 4
             if self.x >= self.width:
