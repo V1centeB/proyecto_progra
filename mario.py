@@ -73,6 +73,7 @@ class Mario:
         self.count-=1    
 
     def mario_jump_low(self):
+        """Salto con menor altura para evitar que Mario salga del mapa en el tercer nivel"""
         if self.count >= -10:
             neg=1
         if self.count < 0:
@@ -85,19 +86,40 @@ class Mario:
             self.y += (self.count_fall**2) *0.05
             self.count_fall-=1
 
-
     def limitaciones_mario(self):
+        """Invocamos todas las funciones correspondientes a la movilidad de mario"""
+        self.parte_superior_plataformas_mario()
+        self.caida_plataformas_mario()
+        self.colisiones_mario_plataformas()
 
-        #Colision primera planta
-        if (self.x <= 86 or self.x >= self.width - 96) and self.y == 163.75 and not self.mario_dead:
-            self.count = -13
-
+    def parte_superior_plataformas_mario(self):
+        """Permite a Mario caminar sobre plataformas"""
         #Subir a la parte superior de la primera planta
-        elif (self.x <= 87 or self.x >= self.width - 97) and self.y == 131.3 and not self.is_falling and not self.mario_dead:
+        if (self.x <= 87 or self.x >= self.width - 97) and self.y == 131.3 and not self.is_falling and not self.mario_dead:
             self.count = -14            
             self.y = 126
             self.nivel = "primero"
-        
+
+        #Subir a las partes laterales superiores de la segunda planta
+        if (self.x <= 37 or self.x >= self.width - 53) and self.y == 85.10000000000001 and not self.mario_dead:
+            self.count = -14            
+            self.y =  82
+            self.nivel = "segundo"
+            
+        #Subir parte central superior de la segunda planta
+        if (self.x >= (self.width / 2) - 58 and self.x <= 170) and (self.y == 85.10000000000001 or self.y == 82.0) and not self.mario_dead:
+            self.count = -14            
+            self.y =  78
+            self.nivel = "segundo"
+
+        #Subir a la parte superior de la tercera planta
+        if (self.x <= 100 or self.x >= self.width - 110) and self.y == 37.05 and not self.mario_dead:
+            self.count = -14      
+            self.y = 33
+            self.nivel = "tercero"
+
+    def caida_plataformas_mario(self):
+        """Permite a Mario bajar de las plataformas"""
         #Caida Mario primera planta
         if (self.x > 87 and self.x < 148
             ) and self.y == 135.8 and self.nivel == "primero" and not self.mario_dead:
@@ -107,16 +129,6 @@ class Mario:
             self.nivel = "cero"
             self.y = 182
 
-        #Colision segunda planta plataformas laterales
-        if (self.x <= 36 or self.x >= self.width - 52) and self.y == 117.55000000000001 and not self.mario_dead:
-            self.count = -13
-
-        #Subir a las partes laterales superiores de la segunda planta
-        elif (self.x <= 37 or self.x >= self.width - 53) and self.y == 85.10000000000001 and not self.mario_dead:
-            self.count = -14            
-            self.y =  82
-            self.nivel = "segundo"
-
         #Caida Mario segunda planta partes laterales
         if (self.x > 36 and self.x < self.width - 53
             ) and self.y == 91.8 and self.nivel == "segundo" and not self.mario_dead:
@@ -125,22 +137,7 @@ class Mario:
             self.is_falling = False
             self.nivel = "primero"
             self.y = 135.8
-
-        #Colision segunda planta plataforma central
-        if (self.x >= (self.width / 2) - 58 and self.x <= 170) and self.y == 110.35000000000001 and not self.mario_dead:
-            self.count = -12
-            if (self.x > 78 and self.x < self.width - 94):
-                self.count = -1
-                self.nivel = "cero"
-        elif self.y == 161.10000000000002 and self.nivel == "cero" and not self.mario_dead:
-            self.y = 182
-
-        #Subir parte central superior de la segunda planta
-        if (self.x >= (self.width / 2) - 58 and self.x <= 170) and (self.y == 85.10000000000001 or self.y == 82.0) and not self.mario_dead:
-            self.count = -14            
-            self.y =  78
-            self.nivel = "segundo"
-
+        
         #Caida Mario segunda planta plataforma central
         if (self.x < (self.width / 2) - 58 or self.x > 170
             ) and self.y == 87.8 and self.nivel == "segundo" and not self.is_jumping and not self.mario_dead:
@@ -149,25 +146,6 @@ class Mario:
             self.is_falling = False
             self.nivel = "primero"
             self.y = 135.8
-
-        #Colision tercera planta 
-        if (self.x <= 100 or self.x >= self.width - 110) and (self.y == 66.35 or self.y == 69.55) and not self.mario_dead:
-            if self. y == 69.55:
-                self.count = -13
-            else:
-                self.count = -12
-            if (self.x > 24 and self.x < 68):
-                self.count = -1
-                self.nivel = "primero"
-
-        elif (self.y == 117.1 or self.y == 120.3) and self.nivel != "segundo" and not self.mario_dead:
-            self.y = 135.8
-
-        #Subir a la parte superior de la tercera planta
-        elif (self.x <= 100 or self.x >= self.width - 110) and self.y == 37.05 and not self.mario_dead:
-            self.count = -14      
-            self.y = 33
-            self.nivel = "tercero"
 
         #Caida Mario tercera planta
         if (self.x > 100 and self.x < self.width - 110
@@ -184,11 +162,37 @@ class Mario:
             self.y = 87.8
             self.nivel = "segundo"
 
-        """def parte_superior_plataformas_mario(self):
+    def colisiones_mario_plataformas(self):
+        """No permite a Mario atravesar las plataformas"""
+        #Colision primera planta
+        if (self.x <= 86 or self.x >= self.width - 96) and self.y == 163.75 and not self.mario_dead:
+            self.count = -13
 
-        def caida_plataformas_mairo(self):
+        #Colision segunda planta plataformas laterales
+        if (self.x <= 36 or self.x >= self.width - 52) and self.y == 117.55000000000001 and not self.mario_dead:
+            self.count = -13
 
-        def colisiones_mario_plataformas(self):"""
+        #Colision segunda planta plataforma central
+        if (self.x >= (self.width / 2) - 58 and self.x <= 170) and self.y == 110.35000000000001 and not self.mario_dead:
+            self.count = -12
+            if (self.x > 78 and self.x < self.width - 94):
+                self.count = -1
+                self.nivel = "cero"
+        elif self.y == 161.10000000000002 and self.nivel == "cero" and not self.mario_dead:
+            self.y = 182
+
+        #Colision tercera planta 
+        if (self.x <= 100 or self.x >= self.width - 110) and (self.y == 66.35 or self.y == 69.55) and not self.mario_dead:
+            if self. y == 69.55:
+                self.count = -13
+            else:
+                self.count = -12
+            if (self.x > 24 and self.x < 68):
+                self.count = -1
+                self.nivel = "primero"
+
+        elif (self.y == 117.1 or self.y == 120.3) and self.nivel != "segundo" and not self.mario_dead:
+            self.y = 135.8
 
     def muerte_mario(self, enemigo):
         if (self.x == enemigo.x or self.x + 17 == enemigo.x) and self.y == enemigo.y:
