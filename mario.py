@@ -64,7 +64,6 @@ class Mario:
         elif self.dir == "right":
             self.x += 1
 
-
     def mario_jump(self):
         if self.count >= -14:
             neg=1
@@ -88,7 +87,6 @@ class Mario:
 
 
     def limitaciones_mario(self):
-
 
         #Colision primera planta
         if (self.x <= 86 or self.x >= self.width - 96) and self.y == 163.75 and not self.mario_dead:
@@ -186,6 +184,12 @@ class Mario:
             self.y = 87.8
             self.nivel = "segundo"
 
+        """def parte_superior_plataformas_mario(self):
+
+        def caida_plataformas_mairo(self):
+
+        def colisiones_mario_plataformas(self):"""
+
     def muerte_mario(self, enemigo):
         if (self.x == enemigo.x or self.x + 17 == enemigo.x) and self.y == enemigo.y:
             self.mario_dead = True
@@ -198,3 +202,5 @@ class Mario:
             else:
                 pyxel.quit()
 
+    def actualizar_puntuacion(self):
+        pass

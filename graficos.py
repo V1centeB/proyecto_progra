@@ -1,4 +1,5 @@
 import pyxel
+from enemigos.enemigos import Enemigos
 
 class Tuberias:
     """Ubicaremos la funcionalidad de las tuberias"""
@@ -65,3 +66,19 @@ class Bloques:
                 pyxel.blt(self.x - pos, self.y, 2, 108, 186, 7, 7)
                 pos += 8
 
+class Monedas(Enemigos):
+    
+    def __init__(self, x:int, y:int, w:int, h:int, dir:str) -> None:
+        super().__init__(x, y, w, h, dir)
+        
+    def draw(self):
+        if self.count_sprits <= 5:
+            pyxel.blt(self.x, self.y, 2, 165, 50, 7, 11)
+        elif self.count_sprits <= 10:
+            pyxel.blt(self.x, self.y, 2, 165, 50, 7, 11)
+        else:
+            pyxel.blt(self.x, self.y, 2, 150, 50, 1,  11)
+        self.count_sprits += 1
+        if self.count_sprits > 15:
+            self.count_sprits = 0
+    

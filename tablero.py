@@ -40,10 +40,9 @@ class Tablero:
         #Enemigos
         self.koopa = Koopa(self.width, self.height - 195, self.width, self.height, "left")
         self.side = Sides(0, self.height - 195, self.width, self.height, "right")
-
+        self.monedas = graficos.Monedas(0, self.height - 195, self.width, self.height, "right")
 
     def update(self):
-        print(self.side.golpeado)
         #self.mario.caida_mario()
         self.mario.dir = None
 
@@ -95,14 +94,14 @@ class Tablero:
         """---FUNCIONALIDAD ENEMIGOS ----"""
         #for self.enemigo in self.enemigos:
         self.koopa.move_enemigos()
-        self.koopa.limitaciones_enemigos()
         self.koopa.volteado()
         self.koopa.muerte_enemigo(self.mario)
 
         self.side.move_enemigos()
-        self.side.limitaciones_enemigos()
         self.side.volteado()
         self.side.muerte_enemigo(self.mario)
+
+        self.monedas.move_enemigos()
 
         if self.koopa.is_falling:
             if self.koopa.count_fall >= -13:
@@ -118,6 +117,13 @@ class Tablero:
             else:
                 self.side.is_falling = False
                 self.side.count_fall = 0
+
+        if self.monedas.is_falling:
+            if self.monedas.count_fall >= -13:
+                self.monedas.enemigos_fall()
+            else:
+                self.monedas.is_falling = False
+                self.monedas.count_fall = 0
 
 
     def draw(self):
@@ -162,6 +168,9 @@ class Tablero:
         self.segundo_nivel_der.draw_segundo_nivel_der()
         self.tercer_nivel_izq.draw_tercer_nivel_izq()
         self.tercer_nivel_der.draw_tercer_nivel_der()
+
+        #Dibujamos monedas
+        self.monedas.draw()
 
         """Dibujamos mapa interactivo"""
         #vidas mario
