@@ -20,7 +20,16 @@ class Mario:
         self.dir = None 
         self.colision = False
         self.mario_dead = False
- 
+
+    @property
+    def x(self):
+        return self.__x
+    
+    @x.setter
+    def x(self,x):
+        self.__x = x
+
+
     def draw(self):
         pyxel.cls(0)        
         pyxel.blt(self.x, self.y, 1, 0, 13, 17, 22)

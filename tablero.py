@@ -43,6 +43,7 @@ class Tablero:
         self.monedas = graficos.Monedas(0, self.height - 195, self.width, self.height, "right")
 
     def update(self):
+        print(self.mario.puntuacion)
         #self.mario.caida_mario()
         self.mario.dir = None
 

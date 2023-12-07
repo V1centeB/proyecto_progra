@@ -6,11 +6,12 @@ class Enemigos:
     def __init__(self, x, y, w, h, dir) -> None:
         self.x = x
         self.y = y
-        self.count_sprits = 0
         self.width = w
         self.height = h
         self.dir = dir
         self.count_fall = -1
+        self.count_sprits = 0
+        self.count_back_to_live = 0
         self.nivel = "tercero"
         self.is_falling = False
         self.num_veces_golpeado = 0
@@ -60,7 +61,7 @@ class Enemigos:
     def muerte_enemigo(self, mario):
         if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.is_jumping:
             self.num_veces_golpeado += 3
-        if (mario.x +16 >= self.x and mario.x <= self.x + 16) and (mario.y <= self.y + 16 or self.y >= mario.y) and self.stop_moving:
+        if (mario.x +16 >= self.x and mario.x <= self.x + 16) and mario.nivel == self.nivel and self.stop_moving:
             mario.puntuacion += 800
 
     def limitaciones_enemigos(self):
