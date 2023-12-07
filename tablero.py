@@ -73,7 +73,7 @@ class Tablero:
                 self.mario.is_jumping=True
 
         else:
-            if self.mario.count >= -14 and self.mario.nivel != "tercero":
+            if self.mario.count >= -14 and self.mario.nivel != 3:
                 self.mario.mario_jump()
 
             elif self.mario.count >= -14:

@@ -12,7 +12,7 @@ class Enemigos:
         self.count_fall = -1
         self.count_sprits = 0
         self.count_back_to_live = 0
-        self.nivel = "tercero"
+        self.nivel = 3
         self.is_falling = False
         self.num_veces_golpeado = 0
         self.stop_moving = False
@@ -50,16 +50,16 @@ class Enemigos:
             self.tuberia_dcha = True
             self.x = 34
             self.y = 25
-            self.nivel = "tercero"
+            self.nivel = 3
 
         if (self.x, self.y) == (-12, 182) and self.dir == "left" and not self.stop_moving:
             self.tuberia_izda = True
             self.x = 190
             self.y = 25
-            self.nivel = "tercero"
+            self.nivel = 3
 
     def muerte_enemigo(self, mario):
-        if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.is_jumping:
+        if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.nivel == self.nivel - 1:
             self.num_veces_golpeado += 3
         if (mario.x +16 >= self.x and mario.x <= self.x + 16) and mario.nivel == self.nivel and self.stop_moving:
             mario.puntuacion += 800
@@ -71,7 +71,7 @@ class Enemigos:
             self.count_fall = -10
             self.is_falling = True
 
-        if self.y == 51.7: #51.7
+        if self.y == 51.7: 
             self.y = self.height - 155 - 15
 
         self.parte_superior_plataformas()
@@ -83,65 +83,65 @@ class Enemigos:
         if (self.x <= 87 or self.x >= self.width - 97) and self.y == 131.3 :
             self.count = -14            
             self.y = 124
-            self.nivel = "primero"
+            self.nivel = 1
 
 
         #Subir a las partes laterales superiores de la segunda planta
         elif (self.x <= 37 or self.x >= self.width - 53) and self.y == 85.10000000000001: #85.0000
             self.count = -14            
-            self.y =  82 #82
-            self.nivel = "segundo"
+            self.y =  82 
+            self.nivel = 2
 
 
 
         #Subir parte central superior de la segunda planta
         if (self.x >= (self.width / 2) - 58 and self.x <= 170) and (self.y == 85.10000000000001 or self.y == 82.0): #85.100,82
             self.count = -14            
-            self.y =  78 #78
-            self.nivel = "segundo"
+            self.y =  78 
+            self.nivel = 2
 
 
                 
         #Subir a la parte superior de la tercera planta
-        elif (self.x <= 100 or self.x >= self.width - 110) and self.y == 37.5: #37.05
+        elif (self.x <= 100 or self.x >= self.width - 110) and self.y == 37.5: 
             self.count = -14      
-            self.y = 33 #33
-            self.nivel = "tercero"
+            self.y = 33 
+            self.nivel = 3
 
     def caida_plataformas(self):
 
         #Caida enemigos primera planta
         if (self.x > 87 and self.x < 148
-            ) and self.y == 141.8 and self.nivel == "primero": #self.y == 135.8
+            ) and self.y == 141.8 and self.nivel == 1: 
             self.is_falling = True
-        if self.y == 182.75: #176.75
+        if self.y == 182.75: 
             self.is_falling = False
-            self.nivel = "cero"
-            self.y = 188 #182
+            self.nivel = 0
+            self.y = 188 
 
         #Caida enemigos segunda planta partes laterales
         if (self.x > 36 and self.x < self.width - 53
-            ) and self.y == 94.8 and self.nivel == "segundo": #94.8
+            ) and self.y == 94.8 and self.nivel == 2: 
             self.is_falling = True
-        if self.y == 143.75 and self.nivel == "segundo": #141.75ok
+        if self.y == 143.75 and self.nivel == 2: 
             self.is_falling = False
-            self.nivel = "primero"
-            self.y = 141.8 #135.8ok
+            self.nivel = 1
+            self.y = 141.8 
 
         #Caida enemigos segunda planta plataforma central
         if (self.x < (self.width / 2) - 58 or self.x > 170
-            ) and self.y == 93.8 and self.nivel == "segundo": #93.8ok
+            ) and self.y == 93.8 and self.nivel == 2: 
             self.is_falling = True
-        if self.y == 134.75 and self.nivel == "segundo": #128.75ok
+        if self.y == 134.75 and self.nivel == 2:
             self.is_falling = False
-            self.nivel = "primero"
-            self.y = 141.8 #135.8ok
+            self.nivel = 1
+            self.y = 141.8 
 
         #Caida enemigos tercera planta
         if (self.x > 100 and self.x < self.width - 110
-            ) and self.y == self.height - 170 and self.nivel == "tercero": #y=50
+            ) and self.y == self.height - 170 and self.nivel == 3: 
             self.is_falling = True
 
-        if self.y == 90.95: #91.95ok
-            self.y = 93.8 #87.8ok
-            self.nivel = "segundo"
+        if self.y == 90.95: 
+            self.y = 93.8 
+            self.nivel = 2
