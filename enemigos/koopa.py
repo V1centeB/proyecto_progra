@@ -31,7 +31,7 @@ class Koopa(Enemigos):
 
     def draw_1(self):
         if self.dir == "left":
-            pyxel.blt(self.x, self.y, 0, 191, 24, 16, 15)
+            pyxel.blt(self.x, self.y, 0, 192, 24, 16, 15)
         elif self.dir == "right":
             pyxel.blt(self.x, self.y, 0, 5, 24, 16, 15)
 
@@ -62,8 +62,8 @@ class Koopa(Enemigos):
             self.num_veces_golpeado = 0
             self.count_back_to_live = 0
             if self.count_molest < 2:
-                self.speed += 1
-                self.count_molest += 0.5
+                self.speed += 0.5
+                self.count_molest += 1
 
 
             

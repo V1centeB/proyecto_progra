@@ -17,6 +17,9 @@ class Tuberias:
     def draw_tuberia1_izq(self):
           pyxel.blt(self.x, self.y, 2, 47, 158, 47, 32)
 
+    def draw_tuberia1_der(self):
+          pyxel.blt(self.x, self.y, 2, 49, 222, 47, 32)
+
 class Bloques:
     """Ubicaremos la funcionalidad de los bloques """
     def __init__(self, x, y):

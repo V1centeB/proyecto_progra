@@ -25,6 +25,7 @@ class Tablero:
         self.tuberia0_der = graficos.Tuberias(self.width - 26, self.height - 43)
         #Tuberias superioes
         self.tuberia1_izq = graficos.Tuberias(-10, self.height - 195)
+        self.tuberia1_der = graficos.Tuberias(self.width - 38, self.height - 195)
         #Creamos los distintos pisos 
         #Priemra planta 
         self.primer_nivel_izq = graficos.Bloques(0, self.height - 63)  
@@ -38,8 +39,8 @@ class Tablero:
         self.tercer_nivel_der = graficos.Bloques(self.width - 8, self.height - 155)  
 
         #Enemigos
-        self.koopa = Koopa(self.width, self.height - 195, self.width, self.height, "left")
-        self.side = Sides(0, self.height - 195, self.width, self.height, "right")
+        self.koopa = Koopa(0, self.height - 195, self.width, self.height, "right")
+        self.side = Sides(self.width, self.height - 195, self.width, self.height, "left")
         self.monedas = graficos.Monedas(0, self.height - 195, self.width, self.height, "right")
 
         self.lista_enemigos = []
@@ -146,6 +147,7 @@ class Tablero:
         self.tuberia0_izq.draw_tuberia0_izq()
         self.tuberia0_der.draw_tuberia0_der()
         self.tuberia1_izq.draw_tuberia1_izq()
+        self.tuberia1_der.draw_tuberia1_der()
 
         #Dibujamos el resto de plantas(bloques del suelo)
         self.primer_nivel_izq.draw_primer_nivel_izq()
