@@ -42,8 +42,12 @@ class Tablero:
         self.side = Sides(0, self.height - 195, self.width, self.height, "right")
         self.monedas = graficos.Monedas(0, self.height - 195, self.width, self.height, "right")
 
+        self.lista_enemigos = []
+        self.lista_enemigos.append(self.koopa)
+        self.lista_enemigos.append(self.side)
+
     def update(self):
-        print(self.mario.puntuacion)
+        print(self.mario.inmortal)
         #self.mario.caida_mario()
         self.mario.dir = None
 
@@ -53,7 +57,7 @@ class Tablero:
         """---FUNCIONALIDAD MARIO ----"""
 
         self.mario.limitaciones_mario()
-        self.mario.muerte_mario(self.koopa)
+        self.mario.muerte_mario(self.lista_enemigos)
 
 
         #Movimiento izquierda
@@ -93,38 +97,20 @@ class Tablero:
                 self.mario.count_fall = 0
 
         """---FUNCIONALIDAD ENEMIGOS ----"""
-        #for self.enemigo in self.enemigos:
-        self.koopa.move_enemigos()
-        self.koopa.volteado()
-        self.koopa.muerte_enemigo(self.mario)
-
-        self.side.move_enemigos()
-        self.side.volteado()
-        self.side.muerte_enemigo(self.mario)
+        
+        for enemigo in self.lista_enemigos:
+            enemigo.move_enemigos()
+            enemigo.volteado()
+            enemigo.muerte_enemigo(self.mario)
+            
+            if enemigo.is_falling:
+                if enemigo.count_fall >= -13:
+                    enemigo.enemigos_fall()
+                else:
+                    enemigo.is_falling = False
+                    enemigo.count_fall = 0
 
         self.monedas.move_enemigos()
-
-        if self.koopa.is_falling:
-            if self.koopa.count_fall >= -13:
-                self.koopa.enemigos_fall()
-            else:
-                self.koopa.is_falling = False
-                self.koopa.count_fall = 0
-
-
-        if self.side.is_falling:
-            if self.side.count_fall >= -13:
-                self.side.enemigos_fall()
-            else:
-                self.side.is_falling = False
-                self.side.count_fall = 0
-
-        if self.monedas.is_falling:
-            if self.monedas.count_fall >= -13:
-                self.monedas.enemigos_fall()
-            else:
-                self.monedas.is_falling = False
-                self.monedas.count_fall = 0
 
 
     def draw(self):
@@ -182,15 +168,19 @@ class Tablero:
         if self.mario.vidas == 3:
             pyxel.blt(74, 20, 1, 4, 2, 8, 7)
 
-        if not self.koopa.stop_moving:
-            self.koopa.draw()
-
-        if self.koopa.stop_moving:
-            pyxel.blt(self.koopa.x, self.koopa.y + 7, 1, 2, 155, 10, 9)
-
-        if not self.side.stop_moving:  
-            self.side.draw()
+        for enemigo in self.lista_enemigos:
+                enemigo.draw()
         
-        if self.side.stop_moving:
-            pyxel.blt(self.side.x, self.side.y, 0, 131, 88, 16, 15)
+        """if not self.koopa.stop_moving:
+            
+            self.koopa.draw()"""
+
+        """if self.koopa.stop_moving:
+            pyxel.blt(self.koopa.x, self.koopa.y + 7, 1, 2, 155, 10, 9)"""
+
+        """if not self.side.stop_moving:  
+            self.side.draw()"""
+        
+        """if self.side.stop_moving:
+            pyxel.blt(self.side.x, self.side.y, 0, 131, 88, 16, 15)"""
 

@@ -12,7 +12,7 @@ class Mario:
         self.count_sprits = 0
         self.width = width
         self.nivel = 0
-
+        self.inmortal = False
         self.vidas = 3
         self.puntuacion = 0
         self.is_jumping = False
@@ -102,6 +102,7 @@ class Mario:
         self.parte_superior_plataformas_mario()
         self.caida_plataformas_mario()
         self.colisiones_mario_plataformas()
+        self.vuelta_al_juego()
 
     def parte_superior_plataformas_mario(self):
         """Permite a Mario caminar sobre plataformas"""
@@ -205,17 +206,31 @@ class Mario:
         elif (self.y == 117.1 or self.y == 120.3) and self.nivel != 2 and not self.mario_dead:
             self.y = 135.8
 
-    def muerte_mario(self, enemigo):
-        if (self.x == enemigo.x or self.x + 17 == enemigo.x) and self.y == enemigo.y:
-            self.mario_dead = True
-            print('he llegado aqui')
+    def muerte_mario(self, lista_enemigos):
+        for enemigo in lista_enemigos:
+            if (self.x >= enemigo.x and self.x <= enemigo.x + 16) and enemigo.nivel == self.nivel and not enemigo.stop_moving and not self.is_jumping:
+                if not self.inmortal:
+                    self.vidas -= 1
+                    self.reaparecer_mario()
 
-        if self.mario_dead:
-            self.vidas -= 1
-            if self.vidas > 0:
-                pyxel.blt(self.x, self.y, 1, 0, 18, 17, 22)
-            else:
-                pyxel.quit()
+    def reaparecer_mario(self):
+        self.inmortal = True
+        self.x = (self.width / 2) - 13
+        self.y = 10
+        self.nivel = 3
+
+    def vuelta_al_juego(self):
+        if self.inmortal and self.x != (self.width / 2) - 13:
+            self.is_falling = True
+            self.inmortal = False
+        if (self.x > 100 and self.x < self.width - 110):
+                if self.y == 50.95:
+                    self.is_falling = True
+        if self.y == 91.9:
+            self.y = 87.8
+            self.nivel = 2
+
+            
 
     def actualizar_puntuacion(self):
         pass

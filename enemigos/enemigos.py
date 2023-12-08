@@ -12,27 +12,29 @@ class Enemigos:
         self.count_fall = -1
         self.count_sprits = 0
         self.count_back_to_live = 0
+        self.count_molest = 0
         self.nivel = 3
         self.is_falling = False
         self.num_veces_golpeado = 0
         self.stop_moving = False
+        self.speed = 1
 
 
     def move_enemigos(self):
 
         if self.dir == "left" and not self.is_falling and not self.stop_moving:
-            self.x -= 2
+            self.x -= self.speed
             if self.x <= -14:
                 self.x = self.width - 8
         elif self.dir == "left" and self.is_falling:
-            self.x -= 1
+            self.x -= self.speed
 
         elif self.dir == "right" and not self.is_falling and not self.stop_moving:
-            self.x += 2
+            self.x += self.speed
             if self.x >= self.width:
                 self.x = -14  
         elif self.dir == "right" and self.is_falling:
-            self.x += 1
+            self.x += self.speed
         self.tuberias()
         self.limitaciones_enemigos()
 

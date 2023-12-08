@@ -7,10 +7,48 @@ class Koopa(Enemigos):
         super().__init__(x, y, w, h, dir)
 
     def draw(self):
+        if not self.stop_moving:
+            if self.count_molest == 0:
+                self.draw_0()
+            elif self.count_molest == 1:
+                self.draw_1()
+            elif self.count_molest == 2:
+                self.draw_2()
+        
+        else:
+            if self.count_molest == 0:
+                self.draw_s_0()
+            elif self.count_molest == 1:
+                self.draw_s_1()
+            elif self.count_molest == 2:
+                self.draw_s_2()
+
+    def draw_0(self):
         if self.dir == "left":
             pyxel.blt(self.x, self.y, 0, 191, 0, 16, 15)
         elif self.dir == "right":
             pyxel.blt(self.x, self.y, 0, 5, 0, 16, 15)
+
+    def draw_1(self):
+        if self.dir == "left":
+            pyxel.blt(self.x, self.y, 0, 191, 24, 16, 15)
+        elif self.dir == "right":
+            pyxel.blt(self.x, self.y, 0, 5, 24, 16, 15)
+
+    def draw_2(self):
+        if self.dir == "left":
+            pyxel.blt(self.x, self.y, 0, 191, 42, 16, 15)
+        elif self.dir == "right":
+            pyxel.blt(self.x, self.y, 0, 5, 42, 16, 15)
+
+    def draw_s_0(self):
+        pyxel.blt(self.x, self.y + 7, 1, 2, 155, 10, 9)
+
+    def draw_s_1(self):
+        pyxel.blt(self.x, self.y + 7, 1, 2, 178, 10, 9)
+
+    def draw_s_2(self):
+        pyxel.blt(self.x, self.y + 7, 1, 2, 197, 10, 9)
 
         
         
@@ -18,8 +56,14 @@ class Koopa(Enemigos):
     def volteado(self):
         if self.num_veces_golpeado == 3:
             self.stop_moving = True
-        if self.num_veces_golpeado > 3:
+            self.count_back_to_live += 1
+        if self.num_veces_golpeado > 3 or self.count_back_to_live == 130:
             self.stop_moving = False
             self.num_veces_golpeado = 0
+            self.count_back_to_live = 0
+            if self.count_molest < 2:
+                self.speed += 1
+                self.count_molest += 0.5
+
+
             
-    
