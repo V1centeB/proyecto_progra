@@ -19,7 +19,6 @@ class Enemigos:
         self.stop_moving = False
         self.speed = 1
 
-
     def move_enemigos(self):
 
         if self.dir == "left" and not self.is_falling and not self.stop_moving:
@@ -60,11 +59,13 @@ class Enemigos:
             self.y = 25
             self.nivel = 3
 
-    def muerte_enemigo(self, mario):
+    """def muerte_enemigo(self, mario, lista_enemigos):
         if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.nivel == self.nivel - 1:
             self.num_veces_golpeado += 3
         if (mario.x +16 >= self.x and mario.x <= self.x + 16) and mario.nivel == self.nivel and self.stop_moving:
             mario.puntuacion += 800
+            lista_enemigos.remove()"""
+            
 
     def limitaciones_enemigos(self):
 
@@ -87,23 +88,18 @@ class Enemigos:
             self.y = 124
             self.nivel = 1
 
-
         #Subir a las partes laterales superiores de la segunda planta
         elif (self.x <= 37 or self.x >= self.width - 53) and self.y == 85.10000000000001: #85.0000
             self.count = -14            
             self.y =  82 
             self.nivel = 2
 
-
-
         #Subir parte central superior de la segunda planta
         if (self.x >= (self.width / 2) - 58 and self.x <= 170) and (self.y == 85.10000000000001 or self.y == 82.0): #85.100,82
             self.count = -14            
             self.y =  78 
             self.nivel = 2
-
-
-                
+           
         #Subir a la parte superior de la tercera planta
         elif (self.x <= 100 or self.x >= self.width - 110) and self.y == 37.5: 
             self.count = -14      

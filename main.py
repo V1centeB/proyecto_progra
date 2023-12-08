@@ -16,4 +16,3 @@ pyxel.load("assets/my_resource.pyxres")
 #pyxel.image(1).load(17, 0, "assets/player.png")
 #Para iniciar el juego, invocamos el método run con las funciones update y draw
 pyxel.run(tablero.update, tablero.draw)
-

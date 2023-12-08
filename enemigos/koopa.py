@@ -15,7 +15,7 @@ class Koopa(Enemigos):
             elif self.count_molest == 2:
                 self.draw_2()
         
-        else:
+        elif self.stop_moving:
             if self.count_molest == 0:
                 self.draw_s_0()
             elif self.count_molest == 1:
@@ -49,10 +49,7 @@ class Koopa(Enemigos):
 
     def draw_s_2(self):
         pyxel.blt(self.x, self.y + 7, 1, 2, 197, 10, 9)
-
-        
-        
-        
+     
     def volteado(self):
         if self.num_veces_golpeado == 3:
             self.stop_moving = True
@@ -64,6 +61,13 @@ class Koopa(Enemigos):
             if self.count_molest < 2:
                 self.speed += 0.5
                 self.count_molest += 1
+
+    def muerte_enemigo(self, mario, lista_enemigos):
+        if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.nivel == self.nivel - 1:
+            self.num_veces_golpeado += 3
+        if (mario.x +16 >= self.x and mario.x <= self.x + 16) and mario.nivel == self.nivel and self.stop_moving:
+            mario.puntuacion += 800
+            lista_enemigos.remove(self)
 
 
             

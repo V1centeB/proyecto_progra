@@ -1,9 +1,9 @@
 import pyxel
 import graficos
+import random
 from mario import Mario
 from enemigos.koopa import Koopa
 from enemigos.sides import Sides
-from enemigos.enemigos import Enemigos
 
 
 class Tablero:
@@ -12,7 +12,12 @@ class Tablero:
     def __init__(self, w, h):
         self.width = w
         self.height = h
-
+        self.lista_enemigos = []
+        self.lvl = 0
+        self.creo_enemigos = False
+        self.contador_crear_enemigos = 10
+        self.contador_enemigos_creados = 0
+        self.lvl_iniciado = False
 
 
     def crear_objetos(self):
@@ -43,14 +48,56 @@ class Tablero:
         self.side = Sides(self.width, self.height - 195, self.width, self.height, "left")
         self.monedas = graficos.Monedas(0, self.height - 195, self.width, self.height, "right")
 
-        self.lista_enemigos = []
-        self.lista_enemigos.append(self.koopa)
-        self.lista_enemigos.append(self.side)
+    def crear_enemigos(self):
+
+        if self.contador_crear_enemigos == random.randint(0, 50):
+            self.creo_enemigos = True
+
+        if self.lvl == 0 and self.contador_enemigos_creados < 3:
+            if self.creo_enemigos:
+                self.crear_enemigos_lvl_0()
+                self.contador_enemigos_creados += 1
+                self.lvl_iniciado = True
+        elif self.lvl == 1 and self.contador_enemigos_creados < 7:
+            if self.creo_enemigos:
+                self.crear_enemigos_lvl_1()
+                self.contador_enemigos_creados += 1
+                self.lvl_iniciado = True    
+             
+    def crear_enemigos_lvl_0(self):
+        directions = ["left", "right"]
+        dir = directions[random.randint(0, 1)]
+        if dir == "left":
+            x = self.width
+        else: 
+            x = 0
+        self.lista_enemigos.append(Koopa(x, self.height - 195, self.width, self.height, dir)) 
+
+    def crear_enemigos_lvl_1(self):
+        directions = ["left", "right"]
+        dir = directions[random.randint(0, 1)]
+        type_enemy = random.randint(0, 1)
+        if dir == "left":
+            x = self.width
+        else: 
+            x = 0
+        if type_enemy == 0:
+            self.lista_enemigos.append(Koopa(x, self.height - 195, self.width, self.height, dir))
+        else:
+            self.lista_enemigos.append(Sides(x, self.height - 195, self.width, self.height, dir))
+
+    def cambiar_lvl(self):
+        if len(self.lista_enemigos) == 0 and self.lvl_iniciado:
+            self.lvl += 1
+            self.lvl_iniciado = False
 
     def update(self):
         print(self.mario.inmortal)
+        self.crear_enemigos()
+        self.cambiar_lvl()
         #self.mario.caida_mario()
         self.mario.dir = None
+        self.creo_enemigos = False
 
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
@@ -102,7 +149,7 @@ class Tablero:
         for enemigo in self.lista_enemigos:
             enemigo.move_enemigos()
             enemigo.volteado()
-            enemigo.muerte_enemigo(self.mario)
+            enemigo.muerte_enemigo(self.mario, self.lista_enemigos)
             
             if enemigo.is_falling:
                 if enemigo.count_fall >= -13:
@@ -171,18 +218,5 @@ class Tablero:
             pyxel.blt(74, 20, 1, 4, 2, 8, 7)
 
         for enemigo in self.lista_enemigos:
-                enemigo.draw()
-        
-        """if not self.koopa.stop_moving:
-            
-            self.koopa.draw()"""
-
-        """if self.koopa.stop_moving:
-            pyxel.blt(self.koopa.x, self.koopa.y + 7, 1, 2, 155, 10, 9)"""
-
-        """if not self.side.stop_moving:  
-            self.side.draw()"""
-        
-        """if self.side.stop_moving:
-            pyxel.blt(self.side.x, self.side.y, 0, 131, 88, 16, 15)"""
+            enemigo.draw()
 
