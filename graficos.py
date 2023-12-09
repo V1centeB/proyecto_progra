@@ -101,6 +101,22 @@ class Counter:
     def update(self, new_value):
         self.value = new_value
 
+class MonedasCounter:
+    def __init__(self, x, y, value_monedas):
+        self.x = x
+        self.y = y
+        self.value_monedas = value_monedas
+        self.suma = False
+
+    def draw(self):
+        monedas = str(self.value_monedas).zfill(6)[-6:]
+        pyxel.text(self.x, self.y, "I-", 11)
+        pyxel.text(self.x+9, self.y, monedas, 7)
+
+
+    def update(self, new_value):
+        self.value_monedas = new_value
+
 class Pow:
     def __init__(self, x, y):
         self.x = x

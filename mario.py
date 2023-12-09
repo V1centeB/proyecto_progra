@@ -1,5 +1,6 @@
 import pyxel
 from enemigos.enemigos import Enemigos
+from graficos import Monedas
 
 class Mario:
     """Clase con atributos y funciones de Mario"""
@@ -20,6 +21,7 @@ class Mario:
         self.dir = None 
         self.colision = False
         self.mario_dead = False
+        self.monedas_counter = 0
 
     @property
     def x(self):
@@ -216,7 +218,8 @@ class Mario:
                 enemigo.golpear_all = True
             #faltan las colisiones por los lados y por arriba del pow
 
-
+    def colision_monedas(self, moneda):
+        pass
 
     def muerte_mario(self, lista_enemigos):
         for enemigo in lista_enemigos:

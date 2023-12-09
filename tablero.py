@@ -50,6 +50,7 @@ class Tablero:
 
         # counter
         self.counter = graficos.Counter(85, 10, self.mario.puntuacion)
+        self.monedas_counter = graficos.MonedasCounter(45, 10, self.mario.monedas_counter)
         # pow
         self.pow = graficos.Pow(117, self.height-80)
 
@@ -233,6 +234,7 @@ class Tablero:
 
         #Draw counter
         self.counter.draw()
+        self.monedas_counter.draw()
         #Draw pow
         self.pow.draw()
 
