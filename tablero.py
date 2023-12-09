@@ -48,6 +48,11 @@ class Tablero:
         self.side = Sides(self.width, self.height - 195, self.width, self.height, "left")
         self.monedas = graficos.Monedas(0, self.height - 195, self.width, self.height, "right")
 
+        # counter
+        self.counter = graficos.Counter(85, 10, self.mario.puntuacion)
+        # pow
+        self.pow = graficos.Pow(117, self.height-80)
+
     def crear_enemigos(self):
 
         if self.contador_crear_enemigos == random.randint(0, 50):
@@ -106,7 +111,8 @@ class Tablero:
 
         self.mario.limitaciones_mario()
         self.mario.muerte_mario(self.lista_enemigos)
-
+        self.counter.update(self.mario.puntuacion)
+        self.mario.colision_pow(self.lista_enemigos)
 
         #Movimiento izquierda
 
@@ -150,7 +156,7 @@ class Tablero:
             enemigo.move_enemigos()
             enemigo.volteado()
             enemigo.muerte_enemigo(self.mario, self.lista_enemigos)
-            
+
             if enemigo.is_falling:
                 if enemigo.count_fall >= -13:
                     enemigo.enemigos_fall()
@@ -158,7 +164,12 @@ class Tablero:
                     enemigo.is_falling = False
                     enemigo.count_fall = 0
 
+
+
+
         self.monedas.move_enemigos()
+
+
 
 
     def draw(self):
@@ -219,4 +230,10 @@ class Tablero:
 
         for enemigo in self.lista_enemigos:
             enemigo.draw()
+
+        #Draw counter
+        self.counter.draw()
+        #Draw pow
+        self.pow.draw()
+
 

@@ -84,4 +84,28 @@ class Monedas(Enemigos):
         self.count_sprits += 1
         if self.count_sprits > 15:
             self.count_sprits = 0
+
+class Counter:
+    def __init__(self, x, y, value):
+        self.x = x
+        self.y = y
+        self.value = value
+        self.suma = False
+
+    def draw(self):
+        puntuacion = str(self.value).zfill(6)[-6:]
+        pyxel.text(self.x, self.y, "TOP-", 9)
+        pyxel.text(self.x+16, self.y, puntuacion, 7)
+
+
+    def update(self, new_value):
+        self.value = new_value
+
+class Pow:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def draw(self):
+        pyxel.blt(self.x, self.y, 2, 128, 154, 17, 17)
     

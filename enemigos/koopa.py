@@ -1,9 +1,10 @@
 import pyxel
 from enemigos.enemigos import Enemigos
 
+
 class Koopa(Enemigos):
 
-    def __init__(self, x:int, y:int, w:int, h:int, dir:str) -> None:
+    def __init__(self, x: int, y: int, w: int, h: int, dir: str) -> None:
         super().__init__(x, y, w, h, dir)
 
     def draw(self):
@@ -14,7 +15,7 @@ class Koopa(Enemigos):
                 self.draw_1()
             elif self.count_molest == 2:
                 self.draw_2()
-        
+
         elif self.stop_moving:
             if self.count_molest == 0:
                 self.draw_s_0()
@@ -49,13 +50,14 @@ class Koopa(Enemigos):
 
     def draw_s_2(self):
         pyxel.blt(self.x, self.y + 7, 1, 2, 197, 10, 9)
-     
+
     def volteado(self):
-        if self.num_veces_golpeado == 3:
+        if self.num_veces_golpeado == 3 or self.golpear_all == True:
             self.stop_moving = True
             self.count_back_to_live += 1
-        if self.num_veces_golpeado > 3 or self.count_back_to_live == 130:
+        if self.num_veces_golpeado > 3 or self.count_back_to_live == 130 and self.golpear_all == True:
             self.stop_moving = False
+            self.golpear_all = False
             self.num_veces_golpeado = 0
             self.count_back_to_live = 0
             if self.count_molest < 2:
@@ -63,11 +65,17 @@ class Koopa(Enemigos):
                 self.count_molest += 1
 
     def muerte_enemigo(self, mario, lista_enemigos):
-        if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.nivel == self.nivel - 1:
+        if ((self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) \
+                and mario.nivel == self.nivel - 1 and not self.suma) or (self.golpear_all == True \
+                and (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) \
+                and mario.nivel == self.nivel - 1 and not self.suma):
             self.num_veces_golpeado += 3
-        if (mario.x +16 >= self.x and mario.x <= self.x + 16) and mario.nivel == self.nivel and self.stop_moving:
+            mario.puntuacion += 10
+            self.suma = True
+        if (mario.x + 16 >= self.x and mario.x <= self.x + 16) and mario.nivel == self.nivel and self.stop_moving:
             mario.puntuacion += 800
+            self.suma = True
             lista_enemigos.remove(self)
 
 
-            
+

@@ -83,11 +83,12 @@ class Sides(Enemigos):
         pyxel.blt(self.x, self.y, 0, 131, 138, 16, 15)
 
     def volteado(self):
-        if self.num_veces_golpeado == 6:
+        if self.num_veces_golpeado == 6 or self.golpear_all == True:
             self.stop_moving = True
             self.count_back_to_live += 1
-        if self.num_veces_golpeado > 6 or self.count_back_to_live == 130:
+        if self.num_veces_golpeado > 3 or self.count_back_to_live == 130 and self.golpear_all == True:
             self.stop_moving = False
+            self.golpear_all = False
             self.num_veces_golpeado = 0
             self.count_back_to_live = 0
             if self.count_molest < 2:
@@ -95,9 +96,15 @@ class Sides(Enemigos):
                 self.count_molest += 1
 
     def muerte_enemigo(self, mario, lista_enemigos):
-        if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.nivel == self.nivel - 1:
+        if ((self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) \
+                and mario.nivel == self.nivel - 1 and not self.suma) or (self.golpear_all == True \
+                and (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) \
+                and mario.nivel == self.nivel - 1 and not self.suma):
             self.num_veces_golpeado += 3
+            mario.puntuacion += 10
+            self.suma = True
         if (mario.x +16 >= self.x and mario.x <= self.x + 16) and mario.nivel == self.nivel and self.stop_moving:
             mario.puntuacion += 800
+            self.suma = True
             lista_enemigos.remove(self)
       

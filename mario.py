@@ -75,6 +75,9 @@ class Mario:
         elif self.dir == "right":
             self.x += 1
 
+        print("mario_x:" + str(self.x))
+        print("mario_y:" + str(self.y))
+
     def mario_jump(self):
         if self.count >= -14:
             neg=1
@@ -205,6 +208,15 @@ class Mario:
 
         elif (self.y == 117.1 or self.y == 120.3) and self.nivel != 2 and not self.mario_dead:
             self.y = 135.8
+
+    def colision_pow(self, lista_enemigos):
+        if (self.x >= 104 and self.x <= 132) and self.y == 150.5 and self.is_jumping and not self.mario_dead:
+            self.count -= 10
+            for enemigo in lista_enemigos:
+                enemigo.golpear_all = True
+            #faltan las colisiones por los lados y por arriba del pow
+
+
 
     def muerte_mario(self, lista_enemigos):
         for enemigo in lista_enemigos:
