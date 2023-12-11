@@ -48,15 +48,15 @@ class Enemigos:
 
     def tuberias(self):
         # dentro tuberia
-        if (self.x == 27 or self.x + 16 == 218) and self.y == 188 and not self.stop_moving:
+        if (self.x == 27 or self.x + 16 == 218) and self.y == 188 and not self.stop_moving and self.dir == "left":
             self.y -= 6
-
-        if (self.x >= 206) and self.y == 182 and not self.stop_moving:
+        if self.x + 16 == 218 and self.y == 188 and not self.stop_moving and self.dir =="right":
+            self.y -= 6
+        if (self.x >= 206) and self.y == 182 and not self.stop_moving and self.dir =="right":
             self.tuberia_dcha = True
             self.x = 34
             self.y = 25
             self.nivel = 3
-
         if (self.x <= 25.5 and self.y == 182) and self.dir == "left" and not self.stop_moving:
             self.tuberia_izda = True
             self.x = 190

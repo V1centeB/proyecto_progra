@@ -55,7 +55,7 @@ class Koopa(Enemigos):
         if self.num_veces_golpeado == 3 or self.golpear_all == True:
             self.stop_moving = True
             self.count_back_to_live += 1
-        if self.num_veces_golpeado > 3 or self.count_back_to_live == 130 and self.golpear_all == True:
+        if self.num_veces_golpeado > 3 or self.count_back_to_live == 130:
             self.stop_moving = False
             self.golpear_all = False
             self.num_veces_golpeado = 0
