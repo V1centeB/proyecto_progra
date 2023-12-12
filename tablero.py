@@ -159,7 +159,6 @@ class Tablero:
             self.contador_enemigos_creados = 0
 
     def update(self):            
-        print(self.contador_enemigos_creados)
         self.crear_enemigos()
         self.crear_monedas()
         self.cambiar_lvl()
@@ -177,6 +176,7 @@ class Tablero:
         self.counter.update(self.mario.puntuacion)
         self.monedas_counter.update(self.mario.monedas_counter)
         self.mario.colision_pow(self.lista_enemigos, self.pow)
+        self.mario.mario_muere()
 
         #Movimiento izquierda
 

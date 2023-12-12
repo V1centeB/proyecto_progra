@@ -239,3 +239,7 @@ class Mario:
         if self.y == 91.9:
             self.y = 87.8
             self.nivel = 2
+
+    def mario_muere(self):
+        if self.vidas == 0:
+            pyxel.quit()
