@@ -39,8 +39,7 @@ class Enemigos:
             self.x += self.speed
         self.tuberias()
         self.limitaciones_enemigos()
-        #print("pos_x:"+str(self.x))
-        #print("pos_y:" + str(self.y))
+        
     def enemigos_fall(self):
         if self.is_falling:
             self.y += (self.count_fall ** 2) * 0.05
@@ -62,13 +61,6 @@ class Enemigos:
             self.x = 190
             self.y = 25
             self.nivel = 3
-
-    """def muerte_enemigo(self, mario, lista_enemigos):
-        if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.nivel == self.nivel - 1:
-            self.num_veces_golpeado += 3
-        if (mario.x +16 >= self.x and mario.x <= self.x + 16) and mario.nivel == self.nivel and self.stop_moving:
-            mario.puntuacion += 800
-            lista_enemigos.remove()"""
 
     def limitaciones_enemigos(self):
 

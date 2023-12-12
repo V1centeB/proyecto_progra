@@ -77,9 +77,6 @@ class Mario:
         elif self.dir == "right":
             self.x += 1
 
-        print("mario_x:" + str(self.x))
-        print("mario_y:" + str(self.y))
-
     def mario_jump(self):
         if self.count >= -14:
             neg=1
@@ -218,9 +215,6 @@ class Mario:
                 enemigo.golpear_all = True
             #faltan las colisiones por los lados y por arriba del pow
 
-    def colision_monedas(self, moneda):
-        pass
-
     def muerte_mario(self, lista_enemigos):
         for enemigo in lista_enemigos:
             if (self.x >= enemigo.x and self.x <= enemigo.x + 16) and enemigo.nivel == self.nivel and not enemigo.stop_moving and not self.is_jumping:
@@ -244,8 +238,4 @@ class Mario:
         if self.y == 91.9:
             self.y = 87.8
             self.nivel = 2
-
             
-
-    def actualizar_puntuacion(self):
-        pass

@@ -85,6 +85,49 @@ class Monedas(Enemigos):
         if self.count_sprits > 15:
             self.count_sprits = 0
 
+    def move_monedas(self):
+        self.movimiento_basico()
+        self.parte_superior_plataformas()
+        self.caida_plataformas()
+        self.entrar_tub()
+
+    def movimiento_basico(self):
+        # Caida inicial (caida de la tuberia)
+        if (self.x == 34 or self.x == 190) and self.y == self.height - 195:
+            self.count_fall = -10
+            self.is_falling = True
+
+        if self.y == 51.7:
+            self.y = self.height - 155 - 15
+
+        if self.dir == "left" and not self.is_falling and not self.stop_moving:
+            self.x -= self.speed
+            if self.x <= -14 and not self.nivel == 0:
+                self.x = self.width - 8
+        elif self.dir == "left" and self.is_falling:
+            self.x -= self.speed
+
+        elif self.dir == "right" and not self.is_falling and not self.stop_moving:
+            self.x += self.speed
+            if self.x >= self.width and not self.nivel == 0:
+                self.x = -14
+        elif self.dir == "right" and self.is_falling:
+            self.x += self.speed
+    
+    def entrar_tub(self):
+        if (self.x == 27 or self.x + 16 == 218) and self.y == 188 and not self.stop_moving and self.dir == "left":
+            self.y -= 6
+        if self.x + 16 == 218 and self.y == 188 and not self.stop_moving and self.dir =="right":
+            self.y -= 6
+ 
+
+    def colision_mario(self, mario, lista_monedas):
+        if (mario.x +16 >= self.x and mario.x <= self.x + 16) and mario.nivel == self.nivel:
+            mario.monedas_counter += 1
+            self.suma = True
+            lista_monedas.remove(self)
+
+            
 class Counter:
     def __init__(self, x, y, value):
         self.x = x

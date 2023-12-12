@@ -65,7 +65,7 @@ class Koopa(Enemigos):
                 self.count_molest += 1
 
     def muerte_enemigo(self, mario, lista_enemigos):
-        if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22):
+        if (self.x >= mario.x and self.x <= mario.x + 16) and (mario.y <= self.y + 24 or self.y >= mario.y + 22) and mario.nivel == self.nivel - 1:
             self.num_veces_golpeado += 3
             mario.puntuacion += 10
             self.suma = True

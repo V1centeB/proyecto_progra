@@ -19,6 +19,21 @@ class Tablero:
         self.contador_enemigos_creados = 0
         self.lvl_iniciado = False
 
+    @property
+    def width(self):
+        return self.__width
+    
+    @width.setter
+    def width(self,w):
+        self.__width = w
+
+    @property
+    def height(self):
+        return self.__height
+    
+    @height.setter
+    def height(self,height):
+        self.__height = height
 
     def crear_objetos(self):
         """Creamos todos los objetos que usaremos en el juego"""
@@ -46,13 +61,22 @@ class Tablero:
         #Enemigos
         self.koopa = Koopa(0, self.height - 195, self.width, self.height, "right")
         self.side = Sides(self.width, self.height - 195, self.width, self.height, "left")
-        self.monedas = graficos.Monedas(0, self.height - 195, self.width, self.height, "right")
+        self.lista_monedas = []
 
         # counter
         self.counter = graficos.Counter(85, 10, self.mario.puntuacion)
         self.monedas_counter = graficos.MonedasCounter(45, 10, self.mario.monedas_counter)
         # pow
         self.pow = graficos.Pow(117, self.height-80)
+
+
+    def crear_monedas(self):
+        crear = random.randint(0, 150)
+        dir = random.randint(0,1)
+        if crear == 50 and dir == 1:
+            self.lista_monedas.append(graficos.Monedas(0, self.height - 195, self.width, self.height, "right"))
+        elif crear == 50 and dir == 0:
+            self.lista_monedas.append(graficos.Monedas(self.width, self.height - 195, self.width, self.height, "left"))
 
     def crear_enemigos(self):
 
@@ -98,8 +122,9 @@ class Tablero:
             self.lvl_iniciado = False
 
     def update(self):
-        print(self.mario.inmortal)
+        print(self.mario.monedas_counter)
         self.crear_enemigos()
+        self.crear_monedas()
         self.cambiar_lvl()
         #self.mario.caida_mario()
         self.mario.dir = None
@@ -165,11 +190,15 @@ class Tablero:
                     enemigo.is_falling = False
                     enemigo.count_fall = 0
 
-
-
-
-        self.monedas.move_enemigos()
-
+        for monedas in self.lista_monedas:
+            monedas.move_monedas()
+            monedas.colision_mario(self.mario, self.lista_monedas)
+            if monedas.is_falling:
+                if monedas.count_fall >= -13:
+                    monedas.enemigos_fall()
+                else:
+                    monedas.is_falling = False
+                    monedas.count_fall = 0
 
 
 
@@ -218,7 +247,6 @@ class Tablero:
         self.tercer_nivel_der.draw_tercer_nivel_der()
 
         #Dibujamos monedas
-        self.monedas.draw()
 
         """Dibujamos mapa interactivo"""
         #vidas mario
@@ -231,6 +259,9 @@ class Tablero:
 
         for enemigo in self.lista_enemigos:
             enemigo.draw()
+
+        for moneda in self.lista_monedas:
+            moneda.draw()
 
         #Draw counter
         self.counter.draw()
