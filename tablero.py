@@ -48,15 +48,15 @@ class Tablero:
         self.tuberia1_der = graficos.Tuberias(self.width - 38, self.height - 195)
         #Creamos los distintos pisos 
         #Priemra planta 
-        self.primer_nivel_izq = graficos.Bloques(0, self.height - 63)  
-        self.primer_nivel_der = graficos.Bloques(self.width - 8, self.height - 63) 
+        self.primer_nivel_izq = graficos.Bloques(0, self.height - 63, self.lvl)  
+        self.primer_nivel_der = graficos.Bloques(self.width - 8, self.height - 63, self.lvl) 
         #Segunda planta
-        self.segundo_nivel_izq = graficos.Bloques(0, self.height - 107)  
-        self.segundo_nivel_centro = graficos.Bloques((self.width / 2) - 48, self.height - 111)
-        self.segundo_nivel_der = graficos.Bloques(self.width - 8, self.height - 107)  
+        self.segundo_nivel_izq = graficos.Bloques(0, self.height - 107, self.lvl)  
+        self.segundo_nivel_centro = graficos.Bloques((self.width / 2) - 48, self.height - 111, self.lvl)
+        self.segundo_nivel_der = graficos.Bloques(self.width - 8, self.height - 107, self.lvl)  
         #tercera Planta 
-        self.tercer_nivel_izq = graficos.Bloques(0, self.height - 155)  
-        self.tercer_nivel_der = graficos.Bloques(self.width - 8, self.height - 155)  
+        self.tercer_nivel_izq = graficos.Bloques(0, self.height - 155, self.lvl)  
+        self.tercer_nivel_der = graficos.Bloques(self.width - 8, self.height - 155, self.lvl)  
 
         #Enemigos
         self.koopa = Koopa(0, self.height - 195, self.width, self.height, "right")
@@ -71,7 +71,7 @@ class Tablero:
 
 
     def crear_monedas(self):
-        crear = random.randint(0, 150)
+        crear = random.randint(0, 350)
         dir = random.randint(0,1)
         if crear == 50 and dir == 1:
             self.lista_monedas.append(graficos.Monedas(0, self.height - 195, self.width, self.height, "right"))
@@ -93,6 +93,16 @@ class Tablero:
                 self.crear_enemigos_lvl_1()
                 self.contador_enemigos_creados += 1
                 self.lvl_iniciado = True    
+        elif self.lvl == 2 and self.contador_enemigos_creados < 10:
+            if self.creo_enemigos:
+                self.crear_enemigos_lvl_2()
+                self.contador_enemigos_creados += 1
+                self.lvl_iniciado = True
+        elif self.lvl == 3 and self.contador_enemigos_creados < 14:
+            if self.creo_enemigos:
+                self.crear_enemigos_lvl_3()
+                self.contador_enemigos_creados += 1
+                self.lvl_iniciado = True     
              
     def crear_enemigos_lvl_0(self):
         directions = ["left", "right"]
@@ -116,13 +126,40 @@ class Tablero:
         else:
             self.lista_enemigos.append(Sides(x, self.height - 195, self.width, self.height, dir))
 
+    def crear_enemigos_lvl_2(self):
+        directions = ["left", "right"]
+        dir = directions[random.randint(0, 1)]
+        type_enemy = random.randint(0, 1)
+        if dir == "left":
+            x = self.width
+        else: 
+            x = 0
+        if type_enemy == 0:
+            self.lista_enemigos.append(Koopa(x, self.height - 195, self.width, self.height, dir))
+        else:
+            self.lista_enemigos.append(Sides(x, self.height - 195, self.width, self.height, dir))
+
+    def crear_enemigos_lvl_3(self):
+        directions = ["left", "right"]
+        dir = directions[random.randint(0, 1)]
+        type_enemy = random.randint(0, 1)
+        if dir == "left":
+            x = self.width
+        else: 
+            x = 0
+        if type_enemy == 0:
+            self.lista_enemigos.append(Koopa(x, self.height - 195, self.width, self.height, dir))
+        else:
+            self.lista_enemigos.append(Sides(x, self.height - 195, self.width, self.height, dir))
+
     def cambiar_lvl(self):
         if len(self.lista_enemigos) == 0 and self.lvl_iniciado:
             self.lvl += 1
             self.lvl_iniciado = False
+            self.contador_enemigos_creados = 0
 
-    def update(self):
-        print(self.mario.monedas_counter)
+    def update(self):            
+        print(self.contador_enemigos_creados)
         self.crear_enemigos()
         self.crear_monedas()
         self.cambiar_lvl()
@@ -139,7 +176,7 @@ class Tablero:
         self.mario.muerte_mario(self.lista_enemigos)
         self.counter.update(self.mario.puntuacion)
         self.monedas_counter.update(self.mario.monedas_counter)
-        self.mario.colision_pow(self.lista_enemigos)
+        self.mario.colision_pow(self.lista_enemigos, self.pow)
 
         #Movimiento izquierda
 
@@ -201,6 +238,13 @@ class Tablero:
                     monedas.is_falling = False
                     monedas.count_fall = 0
 
+        if self.pow.golpes > 2:
+            for enemigos in self.lista_enemigos:
+                enemigos.stop_moving = False
+                enemigos.golpear_all = False
+            self.pow.golpes = -1
+
+        self.draw_map()
 
 
     def draw(self):
@@ -239,13 +283,7 @@ class Tablero:
         self.tuberia1_der.draw_tuberia1_der()
 
         #Dibujamos el resto de plantas(bloques del suelo)
-        self.primer_nivel_izq.draw_primer_nivel_izq()
-        self.primer_nivel_der.draw_primer_nivel_der()
-        self.segundo_nivel_izq.draw_segundo_nivel_izq()
-        self.segundo_nivel_centro.draw_segundo_nivel_centro()
-        self.segundo_nivel_der.draw_segundo_nivel_der()
-        self.tercer_nivel_izq.draw_tercer_nivel_izq()
-        self.tercer_nivel_der.draw_tercer_nivel_der()
+
 
         #Dibujamos monedas
 
@@ -269,5 +307,28 @@ class Tablero:
         self.monedas_counter.draw()
         #Draw pow
         self.pow.draw()
+        self.draw_map()
 
 
+    def draw_map(self):
+        if self.lvl == 0 or self.lvl ==1:
+            self.primer_nivel_izq.draw_primer_nivel_izq_1()
+            self.primer_nivel_der.draw_primer_nivel_der_1()
+            self.segundo_nivel_izq.draw_segundo_nivel_izq_1()
+            self.segundo_nivel_centro.draw_segundo_nivel_centro_1()
+            self.segundo_nivel_der.draw_segundo_nivel_der_1()
+            self.tercer_nivel_izq.draw_tercer_nivel_izq_1()
+            self.tercer_nivel_der.draw_tercer_nivel_der_1()
+
+        elif self.lvl == 2 or self.lvl ==3:
+            self.primer_nivel_izq.draw_primer_nivel_izq_2()
+            self.primer_nivel_der.draw_primer_nivel_der_2()
+            self.segundo_nivel_izq.draw_segundo_nivel_izq_2()
+            self.segundo_nivel_centro.draw_segundo_nivel_centro_2()
+            self.segundo_nivel_der.draw_segundo_nivel_der_2()
+            self.tercer_nivel_izq.draw_tercer_nivel_izq_2()
+            self.tercer_nivel_der.draw_tercer_nivel_der_2()
+
+    def reiniciar_cont_enemigos(self):
+
+        self.contador_enemigos_creados = 0

@@ -1,6 +1,5 @@
 import pyxel
 from enemigos.enemigos import Enemigos
-from graficos import Monedas
 
 class Mario:
     """Clase con atributos y funciones de Mario"""
@@ -208,11 +207,13 @@ class Mario:
         elif (self.y == 117.1 or self.y == 120.3) and self.nivel != 2 and not self.mario_dead:
             self.y = 135.8
 
-    def colision_pow(self, lista_enemigos):
+    def colision_pow(self, lista_enemigos, pow):
         if (self.x >= 104 and self.x <= 132) and self.y == 150.5 and self.is_jumping and not self.mario_dead:
             self.count -= 10
+            pow.golpes += 1
             for enemigo in lista_enemigos:
                 enemigo.golpear_all = True
+                
             #faltan las colisiones por los lados y por arriba del pow
 
     def muerte_mario(self, lista_enemigos):
@@ -238,4 +239,3 @@ class Mario:
         if self.y == 91.9:
             self.y = 87.8
             self.nivel = 2
-            

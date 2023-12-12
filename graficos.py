@@ -8,7 +8,7 @@ class Tuberias:
         self.x = x
         self.y = y
 
-    def draw_tuberia0_izq(self):    
+    def draw_tuberia0_izq(self): 
         pyxel.blt(self.x, self.y, 2, 8, 234, 26, 27)
 
     def draw_tuberia0_der(self):     
@@ -22,52 +22,98 @@ class Tuberias:
 
 class Bloques:
     """Ubicaremos la funcionalidad de los bloques """
-    def __init__(self, x, y):
+    def __init__(self, x, y, lvl):
           
-          self.x = x
-          self.y = y
+        self.x = x
+        self.y = y
+        self.lvl = lvl
 
-    def draw_primer_nivel_izq(self):
-            pos = 0
-            for i in range(11):
-                pyxel.blt(self.x + pos, self.y, 2, 108, 186, 7, 7)
-                pos += 8
+    def draw_primer_nivel_izq_1(self):
+        pos = 0
+        for i in range(11):
+            pyxel.blt(self.x + pos, self.y, 2, 108, 186, 7, 7)
+            pos += 8
 
-    def draw_primer_nivel_der(self):
-            pos = 0
-            for i in range(11):
-                pyxel.blt(self.x - pos, self.y, 2, 108, 186, 7, 7)
-                pos += 8
+    def draw_primer_nivel_izq_2(self):
+        pos = 0
+        for i in range(11):
+            pyxel.blt(self.x + pos, self.y, 2, 129, 178, 7, 7)
+            pos += 8
 
-    def draw_segundo_nivel_izq(self):
-            pos = 0
-            for i in range(5):
-                pyxel.blt(self.x + pos, self.y, 2, 108, 186, 7, 7)
-                pos += 8
+    def draw_primer_nivel_der_1(self):
+        pos = 0
+        for i in range(11):
+            pyxel.blt(self.x - pos, self.y, 2, 108, 186, 7, 7)
+            pos += 8
 
-    def draw_segundo_nivel_centro(self):
-            pos = 0
-            for i in range(12):
-                pyxel.blt(self.x + pos, self.y, 2, 108, 186, 7, 7)
-                pos += 8
+    def draw_primer_nivel_der_2(self):
+        pos = 0
+        for i in range(11):
+            pyxel.blt(self.x - pos, self.y, 2, 129, 178, 7, 7)
+            pos += 8
 
-    def draw_segundo_nivel_der(self):
-            pos = 0
-            for i in range(5):
-                pyxel.blt(self.x - pos, self.y, 2, 108, 186, 7, 7)
-                pos += 8
+    def draw_segundo_nivel_izq_1(self):
+        pos = 0
+        for i in range(5):
+            pyxel.blt(self.x + pos, self.y, 2, 108, 186, 7, 7)
+            pos += 8
 
-    def draw_tercer_nivel_izq(self):
-            pos = 0
-            for i in range(13):
-                pyxel.blt(self.x + pos, self.y, 2, 108, 186, 7, 7)
-                pos += 8
+    def draw_segundo_nivel_izq_2(self):
+        pos = 0
+        for i in range(5):
+            pyxel.blt(self.x + pos, self.y, 2, 129, 178, 7, 7)
+            pos += 8
 
-    def draw_tercer_nivel_der(self):
-            pos = 0
-            for i in range(13):
-                pyxel.blt(self.x - pos, self.y, 2, 108, 186, 7, 7)
-                pos += 8
+    def draw_segundo_nivel_centro_1(self):
+        pos = 0
+        for i in range(12):
+            pyxel.blt(self.x + pos, self.y, 2, 108, 186, 7, 7)
+            pos += 8
+
+    def draw_segundo_nivel_centro_2(self):
+        pos = 0
+        for i in range(12):
+            pyxel.blt(self.x + pos, self.y, 2, 129, 178, 7, 7)
+            pos += 8
+
+
+    def draw_segundo_nivel_der_1(self):
+        pos = 0
+        for i in range(5):
+            pyxel.blt(self.x - pos, self.y, 2, 108, 186, 7, 7)
+            pos += 8
+
+    def draw_segundo_nivel_der_2(self):
+        pos = 0
+        for i in range(5):
+            pyxel.blt(self.x - pos, self.y, 2, 129, 178, 7, 7)
+            pos += 8
+
+    def draw_tercer_nivel_izq_1(self):
+        pos = 0
+        for i in range(13):
+            pyxel.blt(self.x + pos, self.y, 2, 108, 186, 7, 7)
+            pos += 8
+
+    def draw_tercer_nivel_izq_2(self):
+        pos = 0
+        for i in range(13):
+            pyxel.blt(self.x + pos, self.y, 2, 129, 178, 7, 7)
+            pos += 8
+
+
+    def draw_tercer_nivel_der_1(self):
+        pos = 0
+        for i in range(13):
+            pyxel.blt(self.x - pos, self.y, 2, 108, 186, 7, 7)
+            pos += 8
+
+
+    def draw_tercer_nivel_der_2(self):
+        pos = 0
+        for i in range(13):
+            pyxel.blt(self.x - pos, self.y, 2, 129, 178, 7, 7)
+            pos += 8
 
 class Monedas(Enemigos):
     
@@ -164,6 +210,7 @@ class Pow:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.golpes = 0
 
     def draw(self):
         pyxel.blt(self.x, self.y, 2, 128, 154, 17, 17)
