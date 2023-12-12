@@ -138,6 +138,7 @@ class Tablero:
         self.mario.limitaciones_mario()
         self.mario.muerte_mario(self.lista_enemigos)
         self.counter.update(self.mario.puntuacion)
+        self.monedas_counter.update(self.mario.monedas_counter)
         self.mario.colision_pow(self.lista_enemigos)
 
         #Movimiento izquierda
